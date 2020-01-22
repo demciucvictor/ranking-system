@@ -1,23 +1,20 @@
 package com.codeconstest.ranking.Controller;
 
-import java.time.LocalTime;
-
-import javax.validation.Valid;
-
 import com.codeconstest.ranking.model.TimeRankingDto;
 import com.codeconstest.ranking.service.Formatter;
 import com.codeconstest.ranking.service.TimeDifferenceService;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.AllArgsConstructor;
+import javax.validation.Valid;
+import java.time.LocalTime;
 
 @RestController
-@AllArgsConstructor
-public class TimeDifferenceControllerImpl implements TimeDifferenceController{
+@RequiredArgsConstructor
+public class TimeDifferenceControllerImpl implements TimeDifferenceController {
 
     @Qualifier("timeFormatter")
     final Formatter formatter;
@@ -25,7 +22,7 @@ public class TimeDifferenceControllerImpl implements TimeDifferenceController{
     final TimeDifferenceService timeDifferenceService;
 
     @Override
-    public ResponseEntity validateTime(@RequestBody @Valid final TimeRankingDto timeRankingDto) {
+    public ResponseEntity<Integer> validateTime(@RequestBody final TimeRankingDto timeRankingDto) {
 
         LocalTime initialTime = (LocalTime) formatter.format(timeRankingDto.getInitialTime());
         LocalTime endTime = (LocalTime) formatter.format(timeRankingDto.getFinalTime());
